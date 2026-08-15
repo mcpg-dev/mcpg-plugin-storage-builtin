@@ -1,0 +1,29 @@
+[package]
+name = "mcpg-plugin-storage-builtin"
+version = "0.1.0-beta.13"
+license = "Apache-2.0"
+edition = "2024"
+description = """
+Built-in content-store plugins (`in_process` and `file_system`) for
+the MCPG gateway. Static-firstparty-v1 path-dep — no Cargo feature,
+no opt-in: every gateway build includes these so operators always
+have a default storage available without an external plugin install.
+
+Wraps the implementations from `mcpg-backend-llm-shared`
+(`InProcessContentStore` / `FileSystemContentStore`) in the
+`ContentStorePlugin` factory trait so they slot into the
+`storage.providers:` list alongside third-party plugins like
+`mcpg-plugin-storage-s3`.
+"""
+
+[dependencies]
+mcpg-plugin-protocol = { git = "https://github.com/mcpg-dev/mcpg-plugin-protocol", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13" }
+mcpg-backend-llm-shared = { git = "https://github.com/mcpg-dev/mcpg-backend-llm-shared", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13" }
+async-trait = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+bytes = "1"
+tempfile = "3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
